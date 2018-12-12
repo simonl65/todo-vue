@@ -75,10 +75,11 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    // Dispatch to actions (instead of commit to mutations) whenever the action is
+    // likely to be async or take a long time.
+    // The setTimeouts below are to simulate async actions.
     addTodo(context, todo) {
-      setTimeout(() => {
-        context.commit('addTodo', todo)
-      }, 100)
+      context.commit('addTodo', todo)
     },
     updateTodo(context, todo) {
       setTimeout(() => {
