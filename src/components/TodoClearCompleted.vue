@@ -1,10 +1,12 @@
 <template>
-  <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
+  <button v-if="showClearCompletedButton" @click="clearCompleted">
+    Clear Completed
+  </button>
 </template>
 
 <script>
 export default {
-  name: 'todo-clear-completed',
+  name: 'TodoClearCompleted',
   computed: {
     showClearCompletedButton() {
       return this.$store.getters.showClearCompletedButton
@@ -17,4 +19,3 @@ export default {
   }
 }
 </script>
-
