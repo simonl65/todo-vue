@@ -1,22 +1,21 @@
 <template>
   <div>
-    <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo" @keyup.enter="addTodo">
+    <input v-model="newTodo" type="text" class="todo-input" placeholder="What needs to be done" @keyup.enter="addTodo">
     <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-    <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :checkAll="!anyRemaining">
-    </todo-item>
+      <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :check-all="!anyRemaining" />
     </transition-group>
 
     <div class="extra-container">
-      <todo-check-all></todo-check-all>
-      <todo-items-remaining></todo-items-remaining>
+      <todo-check-all />
+      <todo-items-remaining />
     </div> <!-- end extra-container -->
 
     <div class="extra-container">
-      <todo-filtered></todo-filtered>
+      <todo-filtered />
 
       <div>
         <transition name="fade">
-        <todo-clear-completed></todo-clear-completed>
+          <todo-clear-completed />
         </transition>
       </div>
     </div> <!-- end extra-container -->
@@ -31,7 +30,7 @@ import TodoFiltered from './TodoFiltered'
 import TodoClearCompleted from './TodoClearCompleted'
 
 export default {
-  name: 'todo-list',
+  name: 'TodoList',
   components: {
     TodoItem,
     TodoItemsRemaining,
@@ -55,7 +54,7 @@ export default {
   },
   methods: {
     addTodo() {
-      if (this.newTodo.trim().length == 0) {
+      if (this.newTodo.trim().length === 0) {
         return
       }
 

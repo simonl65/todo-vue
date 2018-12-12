@@ -1,12 +1,16 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-left">
-        <input type="checkbox" v-model="completed" @change="doneEdit">
-        <div v-if="!editing" @dblclick="editTodo" class="todo-item-label" :class="{ completed : completed }">{{ title }}</div>
-        <input v-else class="todo-item-edit" type="text" v-model="title" @blur="doneEdit" @keyup.enter="doneEdit" @keyup.esc="cancelEdit" v-focus>
+      <input v-model="completed" type="checkbox" @change="doneEdit">
+      <div v-if="!editing" class="todo-item-label" :class="{ completed : completed }" @dblclick="editTodo">
+        {{ title }}
+      </div>
+      <input v-else v-model="title" v-focus class="todo-item-edit" type="text" @blur="doneEdit" @keyup.enter="doneEdit" @keyup.esc="cancelEdit">
     </div> <!-- end todo-item-left -->
     <div>
-      <button @click="pluralize">Plural</button>
+      <button @click="pluralize">
+        Plural
+      </button>
       <span class="remove-item" @click="removeTodo(todo.id)">
         &times;
       </span>
@@ -16,7 +20,14 @@
 
 <script>
 export default {
-  name: 'todo-item',
+  name: 'TodoItem',
+  directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
+  },
   props: {
     todo: {
       type: Object,
@@ -36,23 +47,16 @@ export default {
       'beforeEditCache': '',
     }
   },
-  created() {
-    eventBus.$on('pluralize', this.handlePluralize)
-  },
-  beforeDestroy() {
-    eventBus.$off('pluralize', this.handlePluralize)
-  },
   watch: {
     checkAll() {
       this.completed = this.checkAll ? true : this.todo.completed
     }
   },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
+  created() {
+    window.eventBus.$on('pluralize', this.handlePluralize)
+  },
+  beforeDestroy() {
+    window.eventBus.$off('pluralize', this.handlePluralize)
   },
   methods: {
     removeTodo(id) {
@@ -63,7 +67,7 @@ export default {
       this.editing = true
     },
     doneEdit() {
-      if (this.title.trim() == '') {
+      if (this.title.trim() === '') {
         this.title = this.beforeEditCache
       }
       this.editing = false
@@ -79,7 +83,7 @@ export default {
       this.editing = false
     },
     pluralize() {
-      eventBus.$emit('pluralize')
+      window.eventBus.$emit('pluralize')
     },
     handlePluralize() {
       this.title = this.title + 's'
@@ -93,4 +97,3 @@ export default {
   }
 }
 </script>
-

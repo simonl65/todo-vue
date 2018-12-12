@@ -26,14 +26,14 @@ export const store = new Vuex.Store({
       return state.todos.filter(todo => !todo.completed).length
     },
     anyRemaining(state, getters) {
-      return getters.remaining != 0
+      return getters.remaining !== 0
     },
     todosFiltered(state) {
-      if (state.filter == 'all') {
+      if (state.filter === 'all') {
         return state.todos
-      } else if (state.filter == 'active') {
+      } else if (state.filter === 'active') {
         return state.todos.filter(todo => !todo.completed)
-      } else if (state.filter == 'completed') {
+      } else if (state.filter === 'completed') {
         return state.todos.filter(todo => todo.completed)
       }
       return state.todos
@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
       })
     },
     updateTodo(state, todo) {
-      const index = state.todos.findIndex(item => item.id == todo.id)
+      const index = state.todos.findIndex(item => item.id === todo.id)
       state.todos.splice(index, 1, {
         'id': todo.id,
         'title': todo.title,
@@ -61,7 +61,7 @@ export const store = new Vuex.Store({
       })
     },
     deleteTodo(state, id) {
-      const index = state.todos.findIndex(item => item.id == id)
+      const index = state.todos.findIndex(item => item.id === id)
       state.todos.splice(index, 1)
     },
     checkAll(state, checked) {

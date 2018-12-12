@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'todo-remaining',
+  name: 'TodoRemaining',
   computed: {
     remaining() {
       return this.$store.getters.remaining
@@ -12,4 +12,3 @@ export default {
   }
 }
 </script>
-
