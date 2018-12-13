@@ -96,9 +96,16 @@ export const store = new Vuex.Store({
     },
 
     updateTodo(context, todo) {
-      setTimeout(() => {
-        context.commit('updateTodo', todo)
-      }, 100)
+      axios.put('/todos/' + todo.id, {
+        title: todo.title,
+        completed: todo.completed,
+      })
+      .then( response => {
+        context.commit('updateTodo', response.data)
+      })
+      .catch( err => {
+        console.log(err);
+      })
     },
 
     deleteTodo(context, id) {
