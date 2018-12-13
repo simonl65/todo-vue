@@ -8,20 +8,7 @@ axios.defaults.baseURL = 'http://todo-laravel/api'
 export const store = new Vuex.Store({
   state: {
     filter: 'all',
-    todos: [
-      {
-        'id': 1,
-        'title': 'Finish Vue Screencast',
-        'completed': false,
-        'editing': false,
-      },
-      {
-        'id': 2,
-        'title': 'Take over world',
-        'completed': false,
-        'editing': false,
-      },
-    ]
+    todos: []
   },
   getters: {
     remaining(state) {
@@ -45,6 +32,10 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    retrieveTodos(state, todos) {
+      state.todos = todos
+    },
+
     addTodo(state, todo) {
       state.todos.push({
         id: todo.id,
@@ -73,13 +64,6 @@ export const store = new Vuex.Store({
       state.filter = filter
     },
     clearCompleted(state) {
-      axios.get('/todos')
-      .then( response => {
-        console.log(response)
-      })
-      .catch( err => {
-        console.log(err);
-      })
       state.todos = state.todos.filter(todo => !todo.completed)
     }
   },
@@ -87,29 +71,45 @@ export const store = new Vuex.Store({
     // Dispatch to actions (instead of commit to mutations) whenever the action is
     // likely to be async or take a long time.
     // The setTimeouts below are to simulate async actions.
+
+    retrieveTodos(context) {
+      axios.get('/todos')
+      .then( response => {
+        context.commit('retrieveTodos', response.data)
+      })
+      .catch( err => {
+        console.log(err);
+      })
+    },
+
     addTodo(context, todo) {
       context.commit('addTodo', todo)
     },
+
     updateTodo(context, todo) {
       setTimeout(() => {
         context.commit('updateTodo', todo)
       }, 100)
     },
+
     deleteTodo(context, id) {
       setTimeout(() => {
         context.commit('deleteTodo', id)
       }, 100)
     },
+
     checkAll(context, checked) {
       setTimeout(() => {
         context.commit('checkAll', checked)
       }, 100)
     },
+
     updateFilter(context, filter) {
       setTimeout(() => {
         context.commit('updateFilter', filter)
       }, 100)
     },
+
     clearCompleted(context) {
       setTimeout(() => {
         context.commit('clearCompleted')

@@ -44,6 +44,7 @@ export default {
       idForTodo: 3,
     }
   },
+
   computed: {
     anyRemaining() {
       return this.$store.getters.anyRemaining
@@ -52,6 +53,11 @@ export default {
       return this.$store.getters.todosFiltered
     }
   },
+
+  created() {
+    this.$store.dispatch('retrieveTodos')
+  },
+
   methods: {
     addTodo() {
       if (this.newTodo.trim().length === 0) {
