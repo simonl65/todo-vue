@@ -67,11 +67,11 @@ export const store = new Vuex.Store({
       state.todos = state.todos.filter(todo => !todo.completed)
     }
   },
+
   actions: {
     // Dispatch to actions (instead of commit to mutations) whenever the action is
     // likely to be async or take a long time.
     // The setTimeouts below are to simulate async actions.
-
     retrieveTodos(context) {
       axios.get('/todos')
       .then( response => {
@@ -83,7 +83,16 @@ export const store = new Vuex.Store({
     },
 
     addTodo(context, todo) {
-      context.commit('addTodo', todo)
+      axios.post('/todos', {
+        title: todo.title,
+        completed: false,
+      })
+      .then( response => {
+        context.commit('addTodo', response.data)
+      })
+      .catch( err => {
+        console.log(err);
+      })
     },
 
     updateTodo(context, todo) {
