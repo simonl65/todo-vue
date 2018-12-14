@@ -109,27 +109,47 @@ export const store = new Vuex.Store({
     },
 
     deleteTodo(context, id) {
-      setTimeout(() => {
+      axios.delete('/todos/' + id)
+      .then( () => {
         context.commit('deleteTodo', id)
-      }, 100)
+      })
+      .catch( err => {
+        console.log(err);
+      })
     },
 
     checkAll(context, checked) {
-      setTimeout(() => {
+      axios.put('/todos/checkAll', {
+        completed: checked,
+      })
+      .then( () => {
         context.commit('checkAll', checked)
-      }, 100)
+      })
+      .catch( err => {
+        console.log(err);
+      })
     },
 
     updateFilter(context, filter) {
-      setTimeout(() => {
-        context.commit('updateFilter', filter)
-      }, 100)
+      context.commit('updateFilter', filter)
     },
 
     clearCompleted(context) {
-      setTimeout(() => {
+      const completed = context.state.todos
+      .filter(todo => todo.completed) // Only completed todos
+      .map(todo => todo.id) // Get their IDs
+
+      axios.delete('/todos/deleteCompleted', {
+        data: {
+          todos: completed
+        }
+      })
+      .then( () => {
         context.commit('clearCompleted')
-      }, 100)
+      })
+      .catch( err => {
+        console.log(err);
+      })
     }
   }
 })
