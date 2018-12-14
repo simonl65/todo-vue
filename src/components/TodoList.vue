@@ -150,6 +150,8 @@ button {
   font-size: 14px;
   background-color: white;
   appearance: none;
+  padding: .3rem;
+  border-radius: 3px;
 
   &:hover {
     background: lightgreen;
