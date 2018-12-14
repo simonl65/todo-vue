@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <ul class="nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/login">Login</a></li>
-      <li><a href="/register">Register</a></li>
+      <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+      <li><router-link :to="{ name: 'todo' }">App</router-link></li>
+      <li><router-link :to="{ name: 'about' }">About</router-link></li>
+      <li><router-link :to="{ name: 'login' }">Login</router-link></li>
+      <li><router-link :to="{ name: 'register' }">Register</router-link></li>
     </ul>
 
     <router-view />
@@ -21,6 +22,9 @@ export default {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+  body {
+    min-height: 100.1vh;
   }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
