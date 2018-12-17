@@ -78,7 +78,8 @@ export const store = new Vuex.Store({
     // likely to be async or take a long time.
     // The setTimeouts below are to simulate async actions.
     retrieveToken(context, credentials) {
-      axios
+      return new Promise((resolve, reject) => {
+        axios
         .post('/login', {
           username: credentials.username,
           password: credentials.password
@@ -88,10 +89,13 @@ export const store = new Vuex.Store({
 
           localStorage.setItem('access_token', token)
           context.commit('retrieveToken', token)
+          resolve(response)
         })
         .catch(err => {
           console.log(err)
-        });
+          reject(err)
+        })
+      })
     },
 
     retrieveTodos(context) {
