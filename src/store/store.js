@@ -87,6 +87,23 @@ export const store = new Vuex.Store({
     // likely to be async or take a long time.
     // The setTimeouts below are to simulate async actions.
 
+    register(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+        .post('/register', {
+          name: data.name,
+          email: data.email,
+          password: data.password
+        })
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+      })
+    },
+
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 

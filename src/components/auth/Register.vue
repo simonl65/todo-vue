@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper login-form">
     <h2 class="login-heading">Register</h2>
-    <form action="#">
+    <form action="#" @submit.prevent="register">
       <div class="form-control">
         <label for="name">Name</label>
         <input
@@ -44,50 +44,25 @@
 
 <script>
 export default {
-  name: "Register",
-
   data() {
     return {
-      name: "",
-      email: "",
+      name    : "",
+      email   : "",
       password: "",
-      serverErrors: "",
-      successMessage: ""
-    };
+    }
   },
 
   methods: {
-    // validateBeforeSubmit() {
-    //   this.$validator.validateAll().then(result => {
-    //     if (result) {
-    //       // eslint-disable-next-line
-    //       this.register();
-    //     }
-    //   });
-    // },
-
     register() {
-      this.$store
-      .dispatch("register", {
-        name: this.name,
-        email: this.email,
+      this.$store.dispatch("register", {
+        name    : this.name,
+        email   : this.email,
         password: this.password
       })
       .then(() => {
-        this.successMessage = "Registered Successfully!";
-        this.$router.push({
-          name: "login",
-          params: { dataSuccessMessage: this.successMessage }
-        });
-        this.$toast.success({
-          title: this.successMessage,
-          message: "You can login here"
-        });
+        this.$router.push({ name: "login" })
       })
-      .catch(error => {
-        this.serverErrors = Object.values(error.response.data.errors);
-      });
     }
   }
-};
+}
 </script>
