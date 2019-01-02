@@ -11,7 +11,11 @@ export const store = new Vuex.Store({
     filter: 'all',
     todos: []
   },
+
   getters: {
+    loggedIn(state) {
+      return state.token !== null
+    },
     remaining(state) {
       return state.todos.filter(todo => !todo.completed).length
     },
@@ -32,7 +36,12 @@ export const store = new Vuex.Store({
       return state.todos.filter(todo => todo.completed).length > 0
     }
   },
+
   mutations: {
+    destroyToken(state) {
+      state.token = null
+    },
+
     retrieveToken(state, token){
       state.token = token
     },
@@ -77,6 +86,28 @@ export const store = new Vuex.Store({
     // Dispatch to actions (instead of commit to mutations) whenever the action is
     // likely to be async or take a long time.
     // The setTimeouts below are to simulate async actions.
+
+    destroyToken(context) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+      if(context.getters.loggedIn){
+        return new Promise((resolve, reject) => {
+          axios
+          .post('/logout')
+          .then(response => {
+            localStorage.removeItem('access_token')
+            context.commit('destroyToken')
+            resolve(response)
+          })
+          .catch(err => {
+            localStorage.removeItem('access_token')
+            context.commit('destroyToken')
+            reject(err)
+          })
+        })
+      }
+    },
+
     retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
         axios

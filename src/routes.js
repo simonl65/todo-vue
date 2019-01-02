@@ -3,6 +3,7 @@ import LandingPage from './components/marketing/LandingPage'
 import About from './components/marketing/About.vue';
 import Login from './components/auth/Login.vue';
 import Register from './components/auth/Register.vue';
+import Logout from './components/auth/Logout.vue';
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: Logout
   },
 ]
 
