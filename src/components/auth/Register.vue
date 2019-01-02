@@ -2,7 +2,6 @@
   <div class="page-wrapper login-form">
     <h2 class="login-heading">Register</h2>
     <form action="#">
-
       <div class="form-control">
         <label for="name">Name</label>
         <input

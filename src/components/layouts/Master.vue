@@ -44,9 +44,9 @@ export default {
   margin: 0;
   padding: 0;
 }
-  body {
-    min-height: 100.1vh;
-  }
+body {
+  min-height: 100.12vh;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
