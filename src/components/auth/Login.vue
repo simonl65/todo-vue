@@ -2,28 +2,26 @@
   <div class="login-form">
     <h2 class="login-heading">Login</h2>
     <form action="#" @submit.prevent="login">
-
       <div class="form-control">
         <label for="email">Username/Email</label>
-        <input type="email" name="username" id="username" class="login-input" v-model="username">
+        <input id="username" v-model="username" type="email" name="username" class="login-input">
       </div>
 
       <div class="form-control mb-more">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="login-input" v-model="password">
+        <input id="password" v-model="password" type="password" name="password" class="login-input">
       </div>
 
       <div class="form-control">
         <button type="submit" class="btn-submit">Login</button>
       </div>
-
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'login',
+  name: 'Login',
   data() {
     return {
       username: '',
@@ -36,11 +34,13 @@ export default {
         username: this.username,
         password: this.password,
       })
-        .then(response => {
-          this.$router.push({ name: 'todo' })
-        })
+      .then(() => {
+        this.$router.push({ name: 'todo' })
+      })
+      .catch(err => {
+        if( err.indexOf('401') > -1 ) console.log("FAILED TO LOGIN:", err)
+      })
     }
   }
 }
 </script>
-

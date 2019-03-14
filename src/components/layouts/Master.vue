@@ -7,10 +7,9 @@
       <li v-if="!loggedIn"><router-link :to="{ name: 'login' }">Login</router-link></li>
       <li v-if="!loggedIn"><router-link :to="{ name: 'register' }">Register</router-link></li>
       <li v-if="loggedIn"><router-link :to="{ name: 'logout' }">Logout</router-link></li>
-
     </ul>
 
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -25,7 +24,6 @@ export default {
 </script>
 
 <style lang="scss">
-
   * {
     box-sizing: border-box;
     margin: 0;
@@ -117,4 +115,3 @@ export default {
   }
 
 </style>
-

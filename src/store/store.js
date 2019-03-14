@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'http://todo-laravel.test/api'
+axios.defaults.baseURL = 'http://todo-laravel/api'
 
 export const store = new Vuex.Store({
   state: {
@@ -108,8 +108,6 @@ export const store = new Vuex.Store({
               localStorage.removeItem('access_token')
               context.commit('destroyToken')
               resolve(response)
-              // console.log(response);
-              // context.commit('addTodo', response.data)
             })
             .catch(error => {
               localStorage.removeItem('access_token')
@@ -120,26 +118,24 @@ export const store = new Vuex.Store({
       }
     },
     retrieveToken(context, credentials) {
-
       return new Promise((resolve, reject) => {
         axios.post('/login', {
           username: credentials.username,
           password: credentials.password,
         })
-          .then(response => {
-            const token = response.data.access_token
+        .then(response => {
+          // console.log(response);
+          const token = response.data.access_token
 
-            localStorage.setItem('access_token', token)
-            context.commit('retrieveToken', token)
-            resolve(response)
-            // console.log(response);
-            // context.commit('addTodo', response.data)
-          })
-          .catch(error => {
-            console.log(error)
-            reject(error)
-          })
+          localStorage.setItem('access_token', token)
+          context.commit('retrieveToken', token)
+          resolve(response)
         })
+        .catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      })
     },
     retrieveTodos(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
